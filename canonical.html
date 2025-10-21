@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title> Канонічна побудова</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">Команда ГіперМега</div>
+      <div class="subtitle">Інтерактивна аналітична геометрія</div>
+    </div>
+<nav class="nav">
+  <a id="nav-build" class="nav-link active" href="index.html">Загальна побудова</a>
+  <a id="nav-canonical" class="nav-link" href="canonical.html">Канонічна побудова</a>
+  <a id="nav-theory" class="nav-link" href="theory.html">Теорія</a>
+  <a href="quiz.html" class="nav-link">Вікторина</a>
+  <a href="tasks.html" class="nav-link">Задачі</a>
+</nav>
+    <div class="controls">
+      <label class="theme-switch">
+        <input id="themeToggle" type="checkbox" />
+        <span class="slider"></span>
+      </label>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="left-panel">
+      <div class="card card-panel">
+        <label class="label">Виберіть тип кривої</label>
+        <div class="tab-buttons">
+          <button class="tab-btn active" data-type="ellipse">Еліпс / Коло</button>
+          <button class="tab-btn" data-type="hyperbola">Гіпербола</button>
+          <button class="tab-btn" data-type="parabola">Парабола</button>
+        </div>
+
+        <div id="ellipse-form" class="tab-content active">
+          <div class="equation-preview">$$ \frac{(x-h)^2}{a^2} + \frac{(y-k)^2}{b^2} = 1 $$</div>
+          <div class="param-grid">
+            <div class="param-group"><label>a (піввісь):</label><input id="ellipse-a" type="number" value="5"></div>
+            <div class="param-group"><label>b (піввісь):</label><input id="ellipse-b" type="number" value="3"></div>
+            <div class="param-group"><label>h (центр x₀):</label><input id="ellipse-h" type="number" value="0"></div>
+            <div class="param-group"><label>k (центр y₀):</label><input id="ellipse-k" type="number" value="0"></div>
+          </div>
+        </div>
+
+        <div id="hyperbola-form" class="tab-content">
+          <div class="equation-preview">$$ \frac{(x-h)^2}{a^2} - \frac{(y-k)^2}{b^2} = 1 $$</div>
+           <div class="param-grid">
+            <div class="param-group"><label>a (піввісь):</label><input id="hyperbola-a" type="number" value="4"></div>
+            <div class="param-group"><label>b (піввісь):</label><input id="hyperbola-b" type="number" value="3"></div>
+            <div class="param-group"><label>h (центр x₀):</label><input id="hyperbola-h" type="number" value="0"></div>
+            <div class="param-group"><label>k (центр y₀):</label><input id="hyperbola-k" type="number" value="0"></div>
+            <div class="param-group orientation-group"><label>Орієнтація:</label>
+              <select id="hyperbola-orientation">
+                <option value="horizontal" selected>Горизонтальна</option>
+                <option value="vertical">Вертикальна</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div id="parabola-form" class="tab-content">
+          <div class="equation-preview">$$ (y-k)^2 = 4p(x-h) $$</div>
+          <div class="param-grid">
+            <div class="param-group"><label>p (параметр):</label><input id="parabola-p" type="number" value="2"></div>
+            <div class="param-group"><label>h (вершина x₀):</label><input id="parabola-h" type="number" value="0"></div>
+            <div class="param-group"><label>k (вершина y₀):</label><input id="parabola-k" type="number" value="0"></div>
+            <div class="param-group orientation-group"><label>Орієнтація:</label>
+              <select id="parabola-orientation">
+                <option value="horizontal-right" selected>Горизонтальна (вправо)</option>
+                <option value="horizontal-left">Горизонтальна (вліво)</option>
+                <option value="vertical-up">Вертикальна (вгору)</option>
+                <option value="vertical-down">Вертикальна (вниз)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="controls-row">
+          <button id="buildBtnCanonical" class="btn primary">Побудувати</button>
+        </div>
+      </div>
+
+      <div class="card info-panel">
+        <h3>Результат</h3>
+        <div id="solveOutput" class="result">Введіть параметри та натисніть "Побудувати".</div>
+        <div class="controls-row small">
+          <button id="stepsBtn" class="btn subtle">Кроки розв'язання</button>
+        </div>
+        <div id="stepsOutput" class="steps hidden"></div>
+      </div>
+    </aside>
+
+    <section class="right-panel">
+      <div id="graphCanvas" class="graph-canvas"></div>
+      <div class="legend">
+        <div><span class="legend-dot curve"></span> Крива</div>
+        <div><span class="legend-dot focus"></span> Фокуси</div>
+        <div><span class="legend-line directrix"></span> Директриси</div>
+        <div><span class="legend-line major-axis"></span> Головна вісь</div>
+        <div><span class="legend-line minor-axis"></span> Побічна вісь</div>
+        <div><span class="legend-line asymptote"></span> Асимптоти</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>• Інтерактивна аналітична геометрія</div>
+  </footer>
+  
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="scripts/solver.js"></script>
+  <script src="scripts/graph.js"></script> 
+  <script src="scripts/canonical.js"></script> 
+</body>
+</html>
