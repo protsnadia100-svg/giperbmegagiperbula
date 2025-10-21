@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ConicLab — Побудова кривих другого порядку</title>
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">Команда Гіпермега</div>
+      <div class="subtitle">Криві другого порядку</div>
+    </div>
+
+<nav class="nav">
+  <a id="nav-build" class="nav-link active" href="index.html">Загальна побудова</a>
+  <a id="nav-canonical" class="nav-link" href="canonical.html">Канонічна побудова</a>
+  <a id="nav-theory" class="nav-link" href="theory.html">Теорія</a>
+  <a href="quiz.html" class="nav-link">Вікторина</a>
+  <a href="tasks.html" class="nav-link">Задачі</a>
+</nav>
+
+    <div class="controls">
+      <label class="theme-switch">
+        <input id="themeToggle" type="checkbox" />
+        <span class="slider"></span>
+      </label>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="left-panel">
+      <div class="card card-panel">
+        <label class="label">Рівняння (загального виду )</label>
+        <input id="equationInput" placeholder="Напр.: 5x^2 - 6xy + 5y^2 - 32 = 0" spellcheck="false" />
+
+        <div class="controls-row">
+          <button id="buildBtn" class="btn primary">Побудувати</button>
+          <button id="analyzeBtn" class="btn">Аналіз</button>
+          <button id="libraryBtn" class="btn subtle">Бібліотека рівнянь</button>
+        </div>
+
+        <div class="controls-row">
+          <button id="saveExampleBtn" class="btn subtle">Зберегти</button>
+          <button id="clearBtn" class="btn subtle">Очистити</button>
+          <button id="toggleExtrasBtn" class="btn subtle">Осі</button>
+          <button id="toggleConjugateBtn" class="btn subtle">Спряжена</button>
+          <button id="shareBtn" class="btn subtle">Поділитися</button>
+        </div>
+        
+        <div class="controls-row creative-features">
+             <button id="exploreChordsBtn" class="btn creative">Дослідник хорд</button>
+             <button id="tangentModeBtn" class="btn creative">Знайти дотичну</button>
+             <button id="toggle3DBtn" class="btn creative">3D-вигляд</button>
+             <button id="locusAnimationBtn" class="btn creative">Анімація</button>
+        </div>
+
+        <div id="exampleList" class="example-list"></div>
+        <div id="trashCan" class="trash-can">🗑️</div>
+      </div>
+
+      <div class="card info-panel">
+        <h3>Результат</h3>
+        <div id="solveOutput" class="result">Тут з'явиться тип кривої й короткий аналіз.</div>
+        
+        <div class="controls-row small">
+          <button id="stepsBtn" class="btn subtle">Кроки розв'язання</button>
+        </div>
+        <div id="stepsOutput" class="steps hidden"></div>
+      </div>
+
+      <div class="card theory-preview">
+        <h3>Коротко про теорію</h3>
+        <div id="theoryShort"></div>
+        <a href="theory.html" class="link">Докладніше →</a>
+      </div>
+      
+    </aside>
+
+    <section class="right-panel">
+      <div id="graphContainer" class="graph-container">
+          <div id="graphCanvas" class="graph-canvas"></div>
+          <canvas id="animationCanvas" class="animation-canvas"></canvas>
+          <div id="chordLengthDisplay" class="info-display"></div>
+          <div id="tangentInfoDisplay" class="info-display"></div>
+      </div>
+      <div class="legend">
+        <div><span class="legend-dot curve"></span> Крива</div>
+        <div><span class="legend-dot conjugate"></span> Спряжена</div>
+        <div><span class="legend-dot focus"></span> Фокуси</div>
+        <div><span class="legend-dot surface-3d"></span> 3D-поверхня</div>
+        <div><span class="legend-line directrix"></span> Директриси</div>
+        <div><span class="legend-line major-axis"></span> Головна вісь</div>
+        <div><span class="legend-line asymptote"></span> Асимптоти</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>Команда Гіпермега • Криві другого порядку</div>
+  </footer>
+
+  <div id="libraryModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <button id="closeModalBtn" class="modal-close">&times;</button>
+      <h2>Бібліотека рівнянь</h2>
+      <div id="libraryContent"></div>
+    </div>
+  </div>
+
+  <script src="scripts/solver.js"></script>
+  <script src="scripts/graph.js"></script>
+  <script src="scripts/locus_animation.js"></script>
+</body>
+</html>

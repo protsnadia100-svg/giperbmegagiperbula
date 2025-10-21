@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ConicLab — Задачі</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">Команда Гіпермега</div>
+      <div class="subtitle">Криві другого порядку</div>
+    </div>
+    <nav class="nav">
+      <a href="index.html" class="nav-link">Загальна побудова</a>
+      <a href="canonical.html" class="nav-link">Канонічна побудова</a>
+      <a href="theory.html" class="nav-link">Теорія</a>
+      <a href="quiz.html" class="nav-link">Вікторина</a>
+      <a href="tasks.html" class="nav-link active">Задачі</a>
+    </nav>
+    <div class="controls">
+      <label class="theme-switch">
+        <input id="themeToggle" type="checkbox" />
+        <span class="slider"></span>
+      </label>
+    </div>
+  </header>
+
+  <main class="layout tasks-page">
+    <aside class="left-panel task-sidebar">
+        <div class="card">
+            <h3>Задачі: Гіпербола</h3>
+            <button class="btn task-nav-btn active" data-task-id="task-1">1. Побудова за рівнянням</button>
+            <button class="btn task-nav-btn" data-task-id="task-2">2. Знаходження рівняння</button>
+            <button class="btn task-nav-btn" data-task-id="task-3">3. Застосування властивостей</button>
+            <button class="btn task-nav-btn" data-task-id="task-4">4. Геометрична задача</button>
+            <button class="btn task-nav-btn" data-task-id="task-5">5. Практична задача</button>
+            <button class="btn task-nav-btn" data-task-id="task-6">6. Дослідницька задача</button>
+        </div>
+    </aside>
+
+    <section class="right-panel task-content-area">
+
+        <div class="card task-content active" id="task-1">
+          <h3>1. Тип задачі: Побудова за рівнянням</h3>
+          <div class="problem-statement">
+            <p><strong>Умова:</strong></p>
+            <p>
+              Побудувати гіперболу, задану рівнянням \( \frac{x^2}{16} - \frac{y^2}{9} = 1 \). Вказати її вершини, фокуси та рівняння асимптот.
+            </p>
+          </div>
+          <button class="btn primary toggle-solution-btn">Показати розв'язання</button>
+          <div class="solution-panel hidden">
+            <p><strong>Розв'язання:</strong></p>
+            <ol>
+              <li>З канонічного рівняння маємо: <br> \( a^2 = 16 \implies a = 4 \) (дійсна піввісь), <br> \( b^2 = 9 \implies b = 3 \) (уявна піввісь).</li>
+              <li><strong>Вершини</strong> гіперболи знаходяться в точках \( A_1(-a, 0) \) та \( A_2(a, 0) \). Отже, вершини: \( (-4, 0) \) та \( (4, 0) \).</li>
+              <li>Знайдемо відстань до фокусів: \( c^2 = a^2 + b^2 = 16 + 9 = 25 \implies c = 5 \).</li>
+              <li><strong>Фокуси</strong> гіперболи: \( F_1(-c, 0) \) та \( F_2(c, 0) \). Отже, фокуси: \( (-5, 0) \) та \( (5, 0) \).</li>
+              <li><strong>Рівняння асимптот</strong> мають вигляд: \( y = \pm \frac{b}{a}x \).</li>
+            </ol>
+            <hr>
+            <p><strong>Відповідь:</strong> Вершини: \((\pm4, 0)\), Фокуси: \((\pm5, 0)\), Асимптоти: \( y = \pm \frac{3}{4}x \).</p>
+          </div>
+        </div>
+
+        <div class="card task-content" id="task-2">
+          <h3>2. Тип задачі: Знаходження рівняння за даними</h3>
+          <div class="problem-statement">
+            <p><strong>Умова:</strong></p>
+            <p>
+              Скласти канонічне рівняння гіперболи, якщо відстань між її фокусами дорівнює 10, а дійсна вісь (відстань між вершинами) дорівнює 8.
+            </p>
+          </div>
+          <button class="btn primary toggle-solution-btn">Показати розв'язання</button>
+          <div class="solution-panel hidden">
+            <p><strong>Розв'язання:</strong></p>
+            <ol>
+              <li>Відстань між фокусами \(2c\). За умовою: \(2c = 10 \implies c = 5\).</li>
+              <li>Дійсна вісь \(2a\). За умовою: \(2a = 8 \implies a = 4\).</li>
+              <li>Знайдемо \(b^2\) за формулою \(b^2 = c^2 - a^2\): <br> \( b^2 = 5^2 - 4^2 = 25 - 16 = 9 \).</li>
+              <li>Підставляємо \(a^2 = 16\) і \(b^2 = 9\) у канонічне рівняння гіперболи \( \frac{x^2}{a^2} - \frac{y^2}{b^2} = 1 \).</li>
+            </ol>
+            <hr>
+            <p><strong>Відповідь:</strong> \( \frac{x^2}{16} - \frac{y^2}{9} = 1 \).</p>
+          </div>
+        </div>
+
+        <div class="card task-content" id="task-3">
+          <h3>3. Тип задачі: Застосування властивостей</h3>
+          <div class="problem-statement">
+            <p><strong>Умова:</strong></p>
+            <p>Знайти ексцентриситет гіперболи, заданої рівнянням \( \frac{x^2}{25} - \frac{y^2}{144} = 1 \).</p>
+          </div>
+          <button class="btn primary toggle-solution-btn">Показати розв'язання</button>
+          <div class="solution-panel hidden">
+            <p><strong>Розв'язання:</strong></p>
+            <ol>
+              <li>Ексцентриситет \( \varepsilon = \frac{c}{a} \).</li>
+              <li>З рівняння: \(a^2 = 25 \implies a = 5\), \(b^2 = 144 \implies b = 12\).</li>
+              <li>Знаходимо c: \( c^2 = a^2 + b^2 = 25 + 144 = 169 \implies c = 13 \).</li>
+              <li>\( \varepsilon = \frac{13}{5} = 2.6 \).</li>
+            </ol>
+            <hr>
+            <p><strong>Відповідь:</strong> Ексцентриситет гіперболи дорівнює 2.6.</p>
+          </div>
+        </div>
+
+        <div class="card task-content" id="task-4">
+          <h3>4. Тип задачі: Геометрична задача</h3>
+          <div class="problem-statement">
+            <p><strong>Умова:</strong></p>
+            <p>
+              Написати рівняння дотичної до гіперболи \( \frac{x^2}{9} - \frac{y^2}{16} = 1 \) у точці з абсцисою \(x_0 = 5\), що лежить у першій координатній чверті.
+            </p>
+          </div>
+          <button class="btn primary toggle-solution-btn">Показати розв'язання</button>
+          <div class="solution-panel hidden">
+            <p><strong>Розв'язання:</strong></p>
+            <ol>
+              <li>Знайдемо ординату \(y_0\), підставивши \(x_0=5\) у рівняння гіперболи: \( \frac{5^2}{9} - \frac{y_0^2}{16} = 1 \implies \frac{16}{9} = \frac{y_0^2}{16} \implies y_0^2 = \frac{256}{9} \implies y_0 = \frac{16}{3} \).</li>
+              <li>Рівняння дотичної до гіперболи: \( \frac{x_0 x}{a^2} - \frac{y_0 y}{b^2} = 1 \).</li>
+              <li>Підставляємо \(a^2=9\), \(b^2=16\), \(x_0=5\), \(y_0=16/3\): \( \frac{5x}{9} - \frac{(16/3)y}{16} = 1 \implies \frac{5x}{9} - \frac{y}{3} = 1 \).</li>
+              <li>Помножимо рівняння на 9: \( 5x - 3y = 9 \).</li>
+            </ol>
+            <hr>
+            <p><strong>Відповідь:</strong> \( 5x - 3y = 9 \).</p>
+          </div>
+        </div>
+
+        <div class="card task-content" id="task-5">
+          <h3>5. Тип задачі: Практична задача</h3>
+          <div class="problem-statement">
+            <p><strong>Умова:</strong></p>
+            <p>
+              Дві станції системи навігації розташовані на відстані 200 км одна від одної. Корабель отримав сигнал від однієї станції на 400 мікросекунд раніше, ніж від іншої. Визначити рівняння кривої, на якій знаходиться корабель, якщо швидкість поширення сигналу становить 300 000 км/с.
+            </p>
+          </div>
+          <button class="btn primary toggle-solution-btn">Показати розв'язання</button>
+          <div class="solution-panel hidden">
+            <p><strong>Розв'язання:</strong></p>
+            <ol>
+              <li>Корабель знаходиться на гіперболі, де станції є фокусами. Різниця відстаней до фокусів (\(2a\)) є сталою.</li>
+              <li>Переведемо швидкість: \(300\,000\,\text{км/с} = 0.3\,\text{км/}\mu\text{с}\).</li>
+              <li>Різниця відстаней: \( 2a = 0.3 \times 400 = 120\,\text{км} \implies a = 60\,\text{км} \).</li>
+              <li>Відстань між фокусами: \(2c = 200\,\text{км} \implies c = 100\,\text{км}\).</li>
+              <li>\( b^2 = c^2 - a^2 = 100^2 - 60^2 = 10\,000 - 3\,600 = 6\,400 \).</li>
+              <li>Підставляємо \(a^2 = 3\,600\), \(b^2 = 6\,400\) у рівняння.</li>
+            </ol>
+            <hr>
+            <p><strong>Відповідь:</strong> \( \frac{x^2}{3600} - \frac{y^2}{6400} = 1 \).</p>
+          </div>
+        </div>
+
+        <div class="card task-content" id="task-6">
+          <h3>6. Тип задачі: Дослідницька / креативна</h3>
+          <div class="problem-statement">
+            <p><strong>Умова:</strong></p>
+            <p>
+              Дослідити, як форма гіперболоїда обертання використовується в архітектурі. Навести приклад конкретної споруди та пояснити, чому обрана саме така форма.
+            </p>
+          </div>
+          <button class="btn primary toggle-solution-btn">Показати розв'язання</button>
+          <div class="solution-panel hidden">
+            <p><strong>Розв'язання:</strong></p>
+            <p><strong>Застосування:</strong> Гіперболоїдні конструкції, утворені обертанням гіперболи, широко використовуються в архітектурі для побудови веж, градирень АЕС, а також як декоративні елементи.</p>
+            <p><strong>Приклад:</strong> Аджигольський маяк (Херсонська область, Україна) — сітчаста сталева вежа, побудована за проєктом інженера В. Г. Шухова.</p>
+            <p><strong>Чому обрана така форма:</strong></p>
+            <ul>
+              <li><strong>Міцність і стійкість:</strong> гіперболоїдна форма має високу жорсткість і добре чинить опір вітровим навантаженням.</li>
+              <li><strong>Економія матеріалів:</strong> дозволяє досягти великої висоти при мінімальній витраті металу.</li>
+              <li><strong>Простота конструкції:</strong> хоча форма криволінійна, вона утворена прямими балками, що спрощує монтаж.</li>
+            </ul>
+            <hr>
+            <p><strong>Відповідь:</strong> Гіперболоїдна форма використовується для створення легких, міцних і стійких споруд (наприклад, Аджигольського маяка) завдяки оптимальному розподілу навантажень та економії матеріалів.</p>
+          </div>
+        </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>Команда Гіпермега • Криві другого порядку</div>
+  </footer>
+  
+  <script src="scripts/theory.js"></script> 
+  <script src="scripts/tasks.js"></script>
+</body>
+</html>
