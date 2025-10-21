@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ConicLab — Вікторина: Вгадай криву</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <div id="intro-overlay" class="quiz-overlay">
+    <div class="intro-content">
+      <h2>Лотерея Запитань</h2>
+      <p>Визначаємо ваш номер...</p>
+      <div id="lottery-numbers" class="lottery-numbers-container">
+        </div>
+      <div id="selected-number-display" class="hidden">
+        <p>Ваш номер:</p>
+        <span id="winning-number"></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="results-overlay" class="quiz-overlay hidden">
+    <div class="results-content">
+      <div class="checkmark">✓</div>
+      <h1>Вікторину Завершено!</h1>
+      <p class="final-score-text">Ваш результат:</p>
+      <p id="final-score" class="final-score-display">12 / 12</p>
+      <button id="play-again-btn" class="btn primary">Зіграти ще раз</button>
+    </div>
+    <div id="dislike-container"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">Команда Гіпермега</div>
+      <div class="subtitle">Криві другого порядку</div>
+    </div>
+    <nav class="nav">
+      <a href="index.html" class="nav-link">Загальна побудова</a>
+      <a href="canonical.html" class="nav-link">Канонічна побудова</a>
+      <a href="theory.html" class="nav-link">Теорія</a>
+      <a href="quiz.html" class="nav-link active">Вікторина</a>
+      <a href="tasks.html" class="nav-link">Задачі</a>
+    </nav>
+    <div class="controls">
+      <label class="theme-switch">
+        <input id="themeToggle" type="checkbox" />
+        <span class="slider"></span>
+      </label>
+    </div>
+  </header>
+
+  <main id="quiz-main" class="layout quiz-page hidden">
+    <div class="card quiz-card">
+      <h1>Вгадай криву за рівнянням</h1>
+      <p class="quiz-instructions">Проаналізуйте рівняння та виберіть правильний тип кривої. Всього 12 запитань.</p>
+      
+      <div id="equation-display" class="equation-preview quiz"></div>
+      
+      <div id="answer-buttons" class="controls-row quiz-answers">
+        <button class="btn" data-answer="ellipse">Еліпс / Коло</button>
+        <button class="btn" data-answer="hyperbola">Гіпербола</button>
+        <button class="btn" data-answer="parabola">Парабола</button>
+      </div>
+      
+      <div id="feedback-display" class="feedback"></div>
+      
+      <div class="controls-row">
+          <button id="next-question-btn" class="btn primary hidden">Наступне питання →</button>
+      </div>
+      
+      <div id="score-display" class="score">Рахунок: 0 / 0 | Запитання: 0 / 12</div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div>Команда Гіпермега • Криві другого порядку</div>
+  </footer>
+  
+  <script src="scripts/theory.js"></script>
+  <script src="scripts/quiz.js"></script> 
+</body>
+</html>

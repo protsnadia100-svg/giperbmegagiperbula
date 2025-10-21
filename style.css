@@ -1,0 +1,731 @@
+/* styles.css — сучасний UI, дві теми, прозорі панелі, плавний toggle */
+
+/* Базові змінні */
+:root{
+  --accent: #00a0ff;
+  --muted: #98a2ad;
+  /* ЗМІНЕНО: Нова, м'якша темна тема */
+  --bg-dark: linear-gradient(180deg, #0d1b2a, #071022);
+  --bg-light: linear-gradient(180deg, #f7fbff, #eef6ff);
+  --font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  height:100%;
+  margin:0;
+  font-family:var(--font);
+  transition:background 0.35s, color 0.35s;
+}
+
+body{
+  background:var(--bg-dark); 
+  color:#e6eef3;
+}
+body.theme-light{
+  background:var(--bg-light); 
+  color:#072033;
+}
+
+/* Topbar */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 28px;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+.brand{display:flex;flex-direction:column}
+.logo{font-weight:700;font-size:1.1rem;color:var(--accent)}
+.subtitle{font-size:0.85rem;color:var(--muted)}
+.nav{display:flex;gap:14px;align-items:center}
+.nav-link{color:inherit;text-decoration:none;padding:8px 10px;border-radius:8px;transition:background 0.18s}
+.nav-link.active{background:rgba(255,255,255,0.03)}
+
+/* --- НОВИЙ СТИЛЬНИЙ ПЕРЕМИКАЧ ТЕМИ --- */
+.theme-switch {
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+}
+
+.theme-switch input {
+  display:none;
+}
+
+.theme-switch .slider {
+  background-color: #303136;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.theme-switch .slider:before {
+  background-color: #fff;
+  bottom: 4px;
+  content: "";
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  transition: .4s;
+  width: 26px;
+  border-radius: 50%;
+  box-shadow: 0 0 2px rgba(0,0,0,0.4);
+}
+
+.theme-switch input:checked + .slider {
+  background-color: #7ab2e2;
+}
+
+.theme-switch input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Іконки сонця та місяця */
+.theme-switch .slider:after {
+  content: '☀️';
+  color: #f5c400;
+  display: block;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 72%; /* Положення сонця */
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease, left 0.4s ease;
+}
+
+.theme-switch input:checked + .slider:after {
+  opacity: 1;
+  left: 28%; /* Положення сонця при світлій темі */
+}
+
+.theme-switch .slider:before {
+  content: '🌙';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #303136;
+  transition: transform 0.4s ease, background-color 0.4s ease;
+}
+
+.theme-switch input:checked + .slider:before {
+  background-color: #f5c400;
+  content: ''; /* Ховаємо місяць при світлій темі */
+}
+/* --- КІНЕЦЬ НОВОГО СТИЛЮ --- */
+
+/* Layout */
+.layout{display:flex;gap:20px;max-width:1200px;margin:22px auto;padding:0 18px}
+.left-panel{width:360px;display:flex;flex-direction:column;gap:16px}
+.right-panel{flex:1;display:flex;flex-direction:column;gap:10px}
+
+/* Card */
+.card{background:rgba(255,255,255,0.02);padding:14px;border-radius:12px;backdrop-filter:blur(6px);box-shadow:0 8px 30px rgba(2,6,23,0.45)}
+body.theme-light .card{background:rgba(255,255,255,0.9);box-shadow:0 6px 18px rgba(12,30,50,0.06)}
+.label{font-weight:600;margin-bottom:8px;display:block}
+input#equationInput{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;font-size:15px}
+
+/* Buttons */
+.controls-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.btn{padding:9px 12px;border-radius:10px;border:none;cursor:pointer;background:rgba(255,255,255,0.03);color:inherit;font-weight:600;transition:transform .12s, box-shadow .12s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.25)}
+.btn.primary{background:linear-gradient(90deg,var(--accent),#6b8cff);color:#001428;box-shadow:0 10px 30px rgba(0,0,0,0.35)}
+.btn.subtle{background:transparent;border:1px solid rgba(255,255,255,0.04)}
+
+/* Info / Steps */
+.info-panel h3{margin:0 0 6px 0}
+.result{padding:8px 0;font-size:0.95rem; line-height: 1.6;}
+.steps{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;background:rgba(0,0,0,0.06);padding:10px;border-radius:8px;max-height:220px;overflow:auto;display:flex;flex-direction:column;gap:8px;}
+.hidden{display:none}
+
+/* Graph */
+/* ДОДАНО: Контейнер для позиціонування полотна анімації */
+.graph-container {
+  position: relative;
+  width: 100%;
+  height: 640px;
+}
+.graph-canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: transparent;
+}
+/* ДОДАНО: Стилі для полотна анімації, що накладається на графік */
+.animation-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Дозволяє клікам "проходити" крізь полотно */
+  z-index: 10;
+}
+
+.legend{display:flex;gap:12px;align-items:center;justify-content:flex-end;margin-top:8px;flex-wrap: wrap;}
+.legend-dot{display:inline-block;width:12px;height:12px;border-radius:6px}
+.legend-dot.curve{background:linear-gradient(90deg,var(--accent),#6b8cff)}
+.legend-dot.conjugate{background:#ff69b4} /* ДОДАНО */
+.legend-dot.focus{background:#ffeb3b}
+.legend-line{width:26px;height:3px;display:inline-block;border-radius:2px}
+.legend-line.directrix{background:#80cbc4}
+.legend-line.major-axis{background:#ff9800}
+.legend-line.minor-axis{background:#ba68c8}
+.legend-line.asymptote{background:#f44336} /* ДОДАНО */
+
+/* Footer */
+.footer{padding:12px 18px;text-align:center;color:var(--muted)}
+
+/* Drag-n-Drop */
+.trash-can {font-size: 2rem;text-align: right;padding: 10px;margin-top: 10px;border-radius: 8px;transition: background 0.2s, transform 0.2s;}
+.trash-can.over {background: rgba(255, 82, 82, 0.2);transform: scale(1.1);}
+.example-list .btn.drag-over {border-bottom: 2px solid var(--accent);}
+
+/* Theory page */
+.theory-page {max-width: 800px;margin: 22px auto;padding: 0 18px;display: flex;flex-direction: column;gap: 16px;}
+.theory-page article p,.theory-page article li {line-height: 1.7;font-size: 1.05rem;}
+.theory-page article h3 { margin-top: 1.5em; color: var(--accent); }
+.theory-page mjx-display {
+  display: block;
+  margin: 1.5em 0;
+  padding: 1rem;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.1);
+  text-align: center;
+  overflow-x: auto;
+}
+
+/* --- НОВІ СТИЛІ: Модальне вікно бібліотеки --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+.modal-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.modal-content {
+  background: #1a2a3a;
+  padding: 25px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+body.theme-light .modal-content {
+  background: #ffffff;
+}
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+#libraryContent h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: var(--accent);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 5px;
+}
+#libraryContent h3:first-child {
+  margin-top: 0;
+}
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.library-grid button {
+  width: 100%;
+  text-align: left;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+/* --- НОВІ СТИЛІ: Для сторінки канонічної побудови --- */
+.tab-buttons {
+  display: flex;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.2);
+  padding: 5px;
+}
+.tab-btn {
+  flex: 1;
+  padding: 8px 5px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+.tab-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+.equation-preview {
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 15px;
+  background: rgba(0,0,0,0.15);
+  border-radius: 8px;
+  font-size: 1.1rem;
+}
+.param-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.param-group {
+  display: flex;
+  flex-direction: column;
+}
+.param-group label {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+.param-group input, .param-group select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  color: inherit;
+  font-size: 1rem;
+}
+.param-group.orientation-group {
+  grid-column: 1 / -1; /* Розтягнути на всю ширину */
+}
+
+/* Responsive */
+@media(max-width:980px){
+  .layout{flex-direction:column;padding:0 12px}
+  .left-panel{width:100%}
+  .graph-container{height:420px}
+  .graph-canvas{height:420px}
+}
+
+/* ... (усі існуючі стилі без змін) ... */
+
+/* --- НОВІ СТИЛІ: СТОРІНКА ВІКТОРИНИ --- */
+
+.quiz-page {
+  max-width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.quiz-card {
+  width: 100%;
+  text-align: center;
+}
+
+.quiz-instructions {
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.equation-preview.quiz {
+  font-size: 1.5rem;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quiz-answers {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.feedback {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  min-height: 30px;
+}
+
+.feedback.correct {
+  color: #84fab0; /* Зелений */
+}
+
+.feedback.incorrect {
+  color: #ff6b6b; /* Червоний */
+}
+.feedback b {
+    text-transform: capitalize;
+}
+
+.score {
+  margin-top: 20px;
+  color: var(--muted);
+  font-weight: 500;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 15px;
+}
+
+/* Стилі для кнопок-відповідей */
+.btn.correct {
+  background: #28a745;
+  color: white;
+  border-color: #28a745;
+  transform: scale(1.05);
+}
+
+.btn.incorrect {
+  background: #dc3545;
+  color: white;
+  border-color: #dc3545;
+  opacity: 0.7;
+}
+
+/* ... (усі існуючі стилі без змін) ... */
+
+/* Graph */
+/* ... */
+.legend-dot.focus{background:#ffeb3b}
+.legend-dot.surface-3d { background: linear-gradient(45deg, #84fab0, #8fd3f4); } /* НОВИЙ СТИЛЬ */
+.legend-line{width:26px;height:3px;display:inline-block;border-radius:2px}
+/* ... */
+
+/* Креативні кнопки */
+/* ... */
+.btn.creative.active {
+  background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+  transform: translateY(-2px);
+}
+/* НОВИЙ СТИЛЬ для активної 3D кнопки */
+.btn.creative#toggle3DBtn.active {
+    background: linear-gradient(90deg, #84fab0, #8fd3f4);
+    color: #0d1b2a;
+    box-shadow: 0 4px 15px rgba(132, 250, 176, 0.3);
+}
+/* ДОДАНО: НОВИЙ СТИЛЬ для активної кнопки анімації */
+.btn.creative#locusAnimationBtn.active {
+    background: linear-gradient(90deg, #a777e3, #e377c2);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(167, 119, 227, 0.3);
+}
+
+
+/* ... (решта стилів без змін) ... */
+
+/* --- NEW STYLES: QUIZ OVERLAYS (INTRO & RESULTS) --- */
+
+.quiz-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: opacity 0.4s ease;
+}
+
+.quiz-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Intro Screen Specifics */
+#intro-overlay {
+  background: var(--bg-dark);
+}
+body.theme-light #intro-overlay {
+  background: var(--bg-light);
+}
+
+.intro-content {
+  text-align: center;
+  color: inherit;
+}
+.intro-content h2 {
+    font-size: 2.5rem;
+    color: var(--accent);
+}
+.intro-content > p {
+  color: var(--muted);
+  margin-top: -10px;
+}
+
+.lottery-numbers-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  max-width: 400px;
+  margin-top: 2rem;
+  transition: opacity 0.3s;
+}
+
+.lottery-number {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  font-weight: 600;
+  transition: background-color 0.1s, transform 0.1s;
+}
+
+.lottery-number.active {
+  background-color: var(--accent);
+  color: #fff;
+  transform: scale(1.2);
+}
+
+.lottery-number.winner {
+    background-color: #84fab0; /* Green */
+    color: #0d1b2a;
+    transform: scale(1.3);
+    box-shadow: 0 0 20px rgba(132, 250, 176, 0.5);
+}
+
+#selected-number-display {
+  animation: fadeInZoom 0.5s;
+}
+
+#selected-number-display p {
+  font-size: 1.2rem;
+  color: var(--muted);
+  margin: 20px 0 5px 0;
+}
+
+#selected-number-display #winning-number {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #84fab0;
+}
+
+
+/* MODIFIED: Results Screen Specifics */
+#results-overlay.correct-final {
+  background-color: #1e8555;
+  background-image: linear-gradient(45deg, #28a745, #228b22);
+  color: #ffffff;
+}
+
+#results-overlay.incorrect-final {
+  background-color: #b22222;
+  background-image: linear-gradient(45deg, #dc3545, #b22222);
+  color: #ffffff;
+}
+
+.results-content {
+  text-align: center;
+  animation: fadeInZoom 0.5s ease-out;
+}
+
+.checkmark {
+  font-size: 6rem;
+  line-height: 1;
+  font-weight: bold;
+}
+
+#results-overlay.incorrect-final .checkmark {
+    color: #ffcdd2;
+}
+
+.results-content h1 {
+  font-size: 2.8rem;
+  margin: 10px 0;
+}
+
+.final-score-text {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.final-score-display {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 10px 0 30px 0;
+}
+
+#play-again-btn {
+  font-size: 1.2rem;
+  padding: 12px 25px;
+}
+
+#quiz-main.hidden {
+    display: none;
+}
+
+@keyframes fadeInZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ADDED: Styles for dislike animation */
+#dislike-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.dislike {
+    position: absolute;
+    top: -50px;
+    font-size: 2rem;
+    animation-name: fall;
+    animation-timing-function: linear;
+    opacity: 0.8;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(105vh);
+        opacity: 0;
+    }
+}
+/* --- NEW STYLES: TASKS PAGE --- */
+
+.tasks-page {
+    align-items: flex-start;
+}
+
+.task-sidebar .card {
+    position: sticky;
+    top: 90px; /* Adjust based on your header height */
+}
+
+.task-sidebar h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.task-sidebar .btn {
+    width: 100%;
+    margin-top: 8px;
+    text-align: left;
+    justify-content: flex-start;
+    background: rgba(255,255,255,0.03);
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.task-sidebar .btn.active {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+}
+
+.task-content-area {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.task-content {
+    display: none; /* Hidden by default */
+}
+
+.task-content.active {
+    display: block; /* Shown when active */
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.problem-statement {
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+.problem-statement p:first-child {
+    margin-top: 0;
+}
+
+.solution-panel {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.15);
+    border-left: 3px solid var(--accent);
+    line-height: 1.8;
+}
+
+body.theme-light .solution-panel {
+    background: #f0f6ff;
+}
+
+.solution-panel hr {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin: 15px 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* ... (всі попередні стилі) ... */
+
+/* ... (всі інші стилі) ... */
+
+.equation-preview.quiz {
+  font-size: 2.2rem; /* ЗБІЛЬШЕНО ШРИФТ */
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ... (всі інші стилі) ... */
